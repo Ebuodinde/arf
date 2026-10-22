@@ -1,0 +1,9 @@
+{
+  "name": "arf",
+  "version": "0.1.0",
+  "description": "Arf: supervised academic paper writing. The agent researches, outlines, drafts and revises; the human supervises each gate.",
+  "author": {
+    "name": "ebuodinde"
+  },
+  "license": "MIT"
+}

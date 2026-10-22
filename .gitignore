@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+# Paper projects created with arf belong to their authors; keep them out of this repo.
+/papers/
+/projects/

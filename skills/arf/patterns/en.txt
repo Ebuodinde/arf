@@ -1,0 +1,63 @@
+# English filler / generic-prose phrases. One per line, case-insensitive substring match.
+# Lines starting with # are comments. Extend freely via pull request.
+in today's world
+in today's fast-paced
+in the modern era
+it is important to note
+it is worth noting
+it should be noted that
+it is crucial to
+plays a crucial role
+plays a pivotal role
+plays a vital role
+plays a significant role
+a testament to
+navigate the complexities
+navigating the complexities
+delve into
+delves into
+delving into
+shed light on
+sheds light on
+in the realm of
+rich tapestry
+tapestry of
+multifaceted
+ever-evolving
+ever-changing landscape
+landscape of
+a myriad of
+plethora of
+underscores the importance
+highlights the importance
+serves as a reminder
+in conclusion, it can be said
+all in all
+at the end of the day
+cannot be overstated
+game-changer
+paradigm shift
+holistic approach
+seamless
+leverage
+robust framework
+unlock the potential
+harness the power
+pave the way
+paving the way
+stands as
+not only
+foster a deeper understanding
+intricate interplay
+nuanced understanding
+key takeaway
+moreover,
+furthermore,
+additionally,
+in summary,
+overall, this
+various studies
+numerous studies
+several studies have shown
+research has shown that
+studies have shown that
