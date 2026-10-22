@@ -21,7 +21,7 @@ Arf aims for papers that hold up on their merits. It does not fabricate data or 
 ## Install
 
 ```sh
-git clone <this repo> arf && cd arf
+git clone https://github.com/Ebuodinde/arf.git && cd arf
 ./install.sh            # antigravity + claude + codex (symlinks)
 ./install.sh claude     # just one host
 ```
