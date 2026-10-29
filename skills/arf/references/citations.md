@@ -17,9 +17,9 @@ Fabricated or misattributed references are the single fastest way a paper fails 
 
 ## Tools
 - Search: OpenAlex, Crossref, Europe PMC, PubMed, arXiv, bioRxiv, Google Scholar via web search, publisher sites, DergiPark/TR Dizin (Turkish), YÖK Tez Merkezi (Turkish theses).
-- Check: `python3 scripts/cite_check.py <project> [--online]`
-  - offline: every `[@key]` in `draft/` exists in `references.bib`; every bib entry has an identifier and a verified note; reports unused entries and `[[SOURCE?]]` markers.
-  - online: resolves DOIs against Crossref and compares title/year.
+- Check: `python3 <skill>/scripts/cite_check.py <project> [--online]`
+  - offline: every `[@key]` in `draft/` exists in `references.bib`; every bib entry has an identifier and a `note = {verified: <method>, YYYY-MM-DD}`; reports unused entries and `[[SOURCE?]]` markers.
+  - online: resolves DOIs against Crossref and compares title/year (set `ARF_MAILTO=<email>` to use Crossref's polite pool). ISBNs and URLs are not checked online; verify them by hand.
 
 ## Styles
 Write with Pandoc keys; the citation style is applied at build time with a CSL file (`--csl apa.csl`, etc.). Keep the CSL file in the project if the institution requires a specific one.

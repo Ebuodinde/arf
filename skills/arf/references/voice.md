@@ -16,7 +16,7 @@ Describe, with short quoted examples from the samples:
 - Characteristic moves: examples, analogies, numbers, historical framing.
 - Known weaknesses the supervisor wants corrected (e.g. run-on sentences) — improve these rather than imitate them.
 
-Run `python3 scripts/prose_lint.py voice/samples/<file> --lang <code> --json` to get baseline statistics (sentence length distribution, connective frequency) and record them in the profile as a reference point, not a quota.
+Run `python3 <skill>/scripts/prose_lint.py voice/samples/<file> --lang <code> --json` to get baseline statistics (sentence length distribution, connective frequency) and record them in the profile as a reference point, not a quota.
 
 ## Use
 - Before each section, re-read the profile.

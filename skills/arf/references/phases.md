@@ -32,7 +32,7 @@ Gate: supervisor confirms the profile reads like the author.
 ## 6. draft
 Order: usually body sections first, then method/results if empirical, then discussion, then introduction, conclusion, abstract last.
 Per iteration: draft one section into `draft/NN-slug.md` from the outline, citing with `[@key]`. Then run `cite_check.py` and `prose_lint.py`, fix, and report. Mark any sentence you could not source with `[[SOURCE?]]` and list them in the report — never paper over them.
-Gate: per section.
+Gate: per section — log each accepted section with `arf.py log <dir> draft --feedback "<section>: accepted"`; approve the `draft` gate once every section is accepted (blocked while citation errors remain).
 
 ## 7. revise
 Run passes in this order, each as its own iteration, logged in `revisions/log.md`:
@@ -41,7 +41,7 @@ Run passes in this order, each as its own iteration, logged in `revisions/log.md
 3. Evidence: re-open the ledger; check each citation supports exactly the sentence it is attached to; quotes are verbatim with page numbers.
 4. Prose: `style.md` checklist, voice profile, terminology consistency, transitions, paragraph unity. Read paragraphs aloud mentally; cut what a tired examiner would skip.
 5. Format: citation style, headings, figures/tables numbering, abstract/keywords, length.
-Gate: after each pass.
+Gate: after each pass (log it with `arf.py log <dir> revise …`); approve the `revise` gate after the last pass.
 
 ## 8. audit
-Run `arf.py audit <dir>`. Fill `audit.md` with results. Draft `disclosure.md` (see `integrity.md`). Build `paper.md`. Final report to supervisor.
+Run `arf.py audit <dir>` (writes `audit.md`). Draft `disclosure.md` (see `integrity.md`). Build `paper.md`. The `audit` gate cannot be approved until the audit passes. Final report to supervisor.

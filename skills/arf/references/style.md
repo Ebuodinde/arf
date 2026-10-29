@@ -1,6 +1,6 @@
 # Style discipline
 
-Generic machine-flavoured prose is bad academic prose: vague, padded, evenly hedged, symmetric, and empty of specifics. Examiners penalize it whoever wrote it. This checklist targets those weaknesses. `scripts/prose_lint.py` flags many of them automatically; the rest need judgment.
+Generic machine-flavoured prose is bad academic prose: vague, padded, evenly hedged, symmetric, and empty of specifics. Examiners penalize it whoever wrote it. This checklist targets those weaknesses. `<skill>/scripts/prose_lint.py` flags many of them automatically; the rest need judgment.
 
 ## 1. Content before form
 - Each paragraph makes one point that advances the outline. If you cannot state its point in one clause, rewrite it.
@@ -20,6 +20,8 @@ Turkish:
 - Every sentence ending in "-mektedir/-maktadır" in long nominal chains; break with verbal predicates and active constructions where the field allows.
 - Mechanical "Birincisi… İkincisi… Üçüncüsü…" where the argument is not actually enumerative.
 Other languages: build an equivalent list in `voice/profile.md` and pass it to the linter with `--extra`.
+
+Connectives such as "Moreover," / "Ayrıca," / "Bu bağlamda" are not errors; the problem is reaching for the same one paragraph after paragraph. Phrase packs mark these with `~`, and the linter reports them as `overused` only when one occurs 3+ times in a file. Filler phrases are reported on every use. The long-sentence threshold is 35 words for Turkish and 45 elsewhere; a long sentence that genuinely carries a qualification can stay.
 
 ## 3. Rhythm follows meaning
 - Sentence length varies because ideas vary: short for a claim or turn, longer for qualification or synthesis. Do not engineer variation; let the content drive it.

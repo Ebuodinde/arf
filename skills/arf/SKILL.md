@@ -19,7 +19,7 @@ The target is a paper a careful examiner would accept on its merits: a real ques
 
 ## 1. Phase pipeline
 
-Each phase ends at a **gate**: show the supervisor a short summary plus the artifact, ask the specific decisions listed, then run `arf.py gate <dir> <phase> --approve` only after explicit approval. Feedback goes into `revisions/log.md` before you act on it. Full details per phase: `references/phases.md`.
+Each phase ends at a **gate**: show the supervisor a short summary plus the artifact, ask the specific decisions listed, then run `arf.py gate <dir> <phase> --approve` only after explicit approval. Record supervisor feedback verbatim with `arf.py log <dir> <phase> --feedback "…" --change "…"` before you act on it. Full details per phase: `references/phases.md`.
 
 | # | Phase | Artifact | Gate question to supervisor |
 |---|-------|----------|-----------------------------|
@@ -29,8 +29,10 @@ Each phase ends at a **gate**: show the supervisor a short summary plus the arti
 | 4 | outline | `02-outline.md` (argument map) | Does the argument hold? Section order and weights OK? |
 | 5 | voice | `voice/profile.md` | Does this describe how the author writes? |
 | 6 | draft | `draft/NN-*.md`, one section per iteration | Per section: accept, revise, or redirect? |
-| 7 | revise | `revisions/log.md` | Each pass result accepted? (structure → argument → evidence → prose) |
+| 7 | revise | `revisions/log.md` | Each pass result accepted? (structure → argument → evidence → prose → format) |
 | 8 | audit | `audit.md` | Citation audit, lint, word count, and disclosure all clean? |
+
+`draft` and `revise` have many checkpoints but one gate: log each accepted section or pass with `arf.py log`, and approve the gate once all sections / passes are accepted. Gates for brief → voice are blocked while their artifact is the untouched template or still has `<…>` placeholders (write "unknown" / "n/a" where that is the honest answer; never invent a value to pass). The `draft` gate is blocked by citation errors; the `audit` gate is blocked unless the full audit passes.
 
 Rules for the loop:
 - One scoped intervention per iteration (one section, one revision pass, one search round). Then stop at the checkpoint and report.
@@ -40,7 +42,7 @@ Rules for the loop:
 ## 2. Research and citation discipline (non-negotiable)
 
 Read `references/citations.md`. Summary:
-- Every citation must exist and be verified (DOI/ISBN/URL resolved via OpenAlex, Crossref, PubMed, arXiv, publisher page, or a file the user supplied). Use available literature skills/tools (e.g. OpenAlex, Europe PMC, arXiv, PubMed, web search).
+- Every citation must exist and be verified (DOI/ISBN/URL resolved via OpenAlex, Crossref, PubMed, arXiv, publisher page, or a file the user supplied). Use available literature skills/tools (e.g. OpenAlex, Europe PMC, arXiv, PubMed, web search). Mark each bib entry `note = {verified: <method>, YYYY-MM-DD}` only after resolving it; the checker rejects other forms.
 - Record each source in `sources/ledger.md` with what it actually says and where (page/section). Cite only claims you found in the source; never cite from memory of a title.
 - Citations in drafts use Pandoc keys `[@key]` matching `references.bib`.
 - Run `python3 <skill>/scripts/cite_check.py <dir>` (add `--online` when network is available) before every draft gate and at audit. Unresolved or unverified keys block the gate.
@@ -67,7 +69,7 @@ The supervisor may say "devam" / "continue" to approve the gate as presented.
 
 ## 5. Finish
 
-At audit: `arf.py audit <dir>` runs cite check, lint on all draft files, word count against the brief, and confirms `disclosure.md` is filled. Assemble `paper.md` with `arf.py build <dir>` (and `pandoc` to DOCX/PDF if installed). Final report: files, checks run with results, remaining risks, and the AI-use disclosure text for the author to adapt to their institution's policy.
+At audit: `arf.py audit <dir>` runs cite check, lint on all draft files, word count against the brief, and confirms `disclosure.md` is filled. Assemble `paper.md` with `arf.py build <dir>` (`--docx` / `--pdf` export via `pandoc` if installed). Approve the `audit` gate only after the audit passes. Final report: files, checks run with results, remaining risks, and the AI-use disclosure text for the author to adapt to their institution's policy.
 
 ## Stop rules
 

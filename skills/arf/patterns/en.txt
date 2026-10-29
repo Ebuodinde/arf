@@ -1,5 +1,11 @@
-# English filler / generic-prose phrases. One per line, case-insensitive substring match.
+# English filler / generic-prose phrases. One per line, case-insensitive, matched at a
+# word start (suffixed forms also match: "leverage" -> "leveraged").
 # Lines starting with # are comments. Extend freely via pull request.
+#
+# Lines starting with "~" are legitimate connectives or terms: one use is fine; they are
+# flagged as "overused" only when they occur 3 or more times in the same file.
+
+# Filler: flagged on every occurrence
 in today's world
 in today's fast-paced
 in the modern era
@@ -25,7 +31,6 @@ tapestry of
 multifaceted
 ever-evolving
 ever-changing landscape
-landscape of
 a myriad of
 plethora of
 underscores the importance
@@ -36,28 +41,32 @@ all in all
 at the end of the day
 cannot be overstated
 game-changer
-paradigm shift
 holistic approach
 seamless
-leverage
 robust framework
 unlock the potential
 harness the power
 pave the way
 paving the way
-stands as
-not only
 foster a deeper understanding
 intricate interplay
 nuanced understanding
 key takeaway
-moreover,
-furthermore,
-additionally,
-in summary,
 overall, this
 various studies
 numerous studies
 several studies have shown
 research has shown that
 studies have shown that
+
+# Legitimate, but mechanical when repeated (some are literal terms in certain fields:
+# "landscape" in geography, "leverage" in finance, "paradigm shift" in philosophy of science)
+~landscape of
+~leverage
+~paradigm shift
+~stands as
+~not only
+~moreover,
+~furthermore,
+~additionally,
+~in summary,

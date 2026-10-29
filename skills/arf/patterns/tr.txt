@@ -1,5 +1,11 @@
-# Türkçe kalıp / dolgu ifadeler. Satır başına bir ifade, büyük-küçük harf duyarsız alt dize eşleşmesi.
+# Türkçe kalıp / dolgu ifadeler. Satır başına bir ifade, büyük-küçük harf duyarsız,
+# kelime başında eşleşir (ekli biçimler de yakalanır: "günümüzde" -> "günümüzdeki").
 # # ile başlayan satırlar yorumdur. Katkıya açıktır.
+#
+# "~" ile başlayan satırlar meşru bağlaç/kalıplardır: tek kullanımı sorun değildir,
+# yalnızca aynı dosyada 3 veya daha fazla geçtiğinde "overused" olarak işaretlenir.
+
+# Dolgu: her geçişte işaretlenir
 günümüzde
 son yıllarda büyük önem
 büyük önem taşımaktadır
@@ -10,12 +16,7 @@ kritik bir rol oynamaktadır
 hayati bir rol
 önemli bir yere sahiptir
 önemli bir konudur
-bu bağlamda
-bu doğrultuda
-bu çerçevede
-bu noktada
 sonuç olarak söylenebilir
-sonuç olarak,
 genel olarak değerlendirildiğinde
 göz ardı edilmemelidir
 göz ardı edilemez
@@ -31,9 +32,6 @@ hız kesmeden
 ışık tutmayı amaçlamaktadır
 derinlemesine bir bakış
 yadsınamaz
-ele alınacaktır
-incelenecektir
-değinilecektir
 çeşitli çalışmalar
 birçok çalışma
 yapılan çalışmalar göstermektedir
@@ -41,10 +39,20 @@ araştırmalar göstermektedir ki
 literatürde sıklıkla
 dikkat çekmektedir
 dikkat çekici bir şekilde
-ayrıca,
-bunun yanı sıra,
-buna ek olarak,
-öte yandan,
-birincisi,
-ikincisi,
-üçüncüsü,
+
+# Meşru ama aşırı kullanıldığında mekanikleşen bağlaçlar ve duyurular
+~bu bağlamda
+~bu doğrultuda
+~bu çerçevede
+~bu noktada
+~sonuç olarak,
+~ayrıca,
+~bunun yanı sıra,
+~buna ek olarak,
+~öte yandan,
+~birincisi,
+~ikincisi,
+~üçüncüsü,
+~ele alınacaktır
+~incelenecektir
+~değinilecektir

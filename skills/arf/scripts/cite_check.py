@@ -4,7 +4,7 @@
 Offline (default):
   - every [@key] in draft/*.md exists in references.bib
   - every bib entry has an identifier (doi/isbn/url/pmid/eprint)
-  - every bib entry carries a 'verified' note
+  - every bib entry carries a note = {verified: <method>, YYYY-MM-DD}
   - reports unused entries and [[SOURCE?]] markers
 Online (--online): resolves DOIs via Crossref and compares title/year.
 
@@ -25,6 +25,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import arftext  # noqa: E402
 
 ID_FIELDS = ("doi", "isbn", "url", "pmid", "eprint", "issn")
+# "verified: <method>, <YYYY-MM-DD>" — not preceded by "un"/"not " so "unverified" fails.
+VERIFIED = re.compile(r"(?<![\w-])(?<!not )verified\s*:\s*[^,;]*\w[^,;]*[,;]\s*\d{4}-\d{2}-\d{2}", re.I)
 
 
 def draft_files(project):
@@ -40,7 +42,10 @@ def norm(s):
 
 def crossref(doi, timeout=15):
     url = "https://api.crossref.org/works/" + urllib.parse.quote(doi.strip(), safe="/")
-    req = urllib.request.Request(url, headers={"User-Agent": "arf-cite-check/1.0 (mailto:arf@example.org)"})
+    # Crossref asks clients to identify themselves; set ARF_MAILTO to join its polite pool.
+    mailto = os.environ.get("ARF_MAILTO")
+    agent = "arf-cite-check/1.0" + (" (mailto:%s)" % mailto if mailto else "")
+    req = urllib.request.Request(url, headers={"User-Agent": agent})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.load(r)["message"]
 
@@ -74,8 +79,8 @@ def check(project, online=False):
         if not any(e.get(fld) for fld in ID_FIELDS):
             errors.append("no identifier (doi/isbn/url/pmid/eprint): %s" % key)
         note = " ".join(e.get(fld, "") for fld in ("note", "verified", "annote"))
-        if "verified" not in note.lower():
-            errors.append("not marked verified: %s" % key)
+        if not VERIFIED.search(note):
+            errors.append("not marked verified (need note = {verified: <method>, YYYY-MM-DD}): %s" % key)
         if key not in used:
             warnings.append("in bib but not cited: %s" % key)
     for m in markers:

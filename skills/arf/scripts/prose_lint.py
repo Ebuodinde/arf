@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Prose quality reviewer for academic drafts.
 
-Flags generic filler phrases (language packs in ../patterns/<lang>.txt),
-monotony (uniform sentence/paragraph length, repeated openers), very long
-sentences, stacked connectives, list-heavy argument, em-dash overuse, and
-[[SOURCE?]] markers. It is a reviewer for the writer, not a score to game:
-fix real problems, keep meaning intact.
+Flags generic filler phrases (language packs in ../patterns/<lang>.txt, matched
+at word starts), overused connectives ("~" lines in the packs), monotony (uniform sentence/paragraph length, repeated
+openers), very long sentences, reflexive "X, Y and Z" triads, list-heavy
+argument, dash overuse, and [[SOURCE?]] markers. It is a reviewer for the
+writer, not a score to game: fix real problems, keep meaning intact.
 
 Usage: prose_lint.py FILE [FILE...] --lang tr|en|<code> [--extra phrases.txt] [--json]
 """
@@ -21,6 +21,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import arftext  # noqa: E402
 
 PATTERN_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "patterns")
+# Words per sentence before "long_sentence" fires. Agglutinative languages pack more
+# meaning into fewer words, so their threshold is lower.
+LONG_SENTENCE = {"tr": 35}
+LONG_SENTENCE_DEFAULT = 45
+# A "~" phrase (legitimate connective) is reported once it occurs this often in one text.
+OVERUSE_MIN = 3
 
 
 def load_phrases(lang, extra=None):
@@ -51,8 +57,20 @@ def cv(values):
     return statistics.pstdev(values) / m if m else None
 
 
-def lint_text(text, lang="en", phrases=None, long_sentence=45):
+def lint_text(text, lang="en", phrases=None, long_sentence=None):
     phrases = phrases if phrases is not None else load_phrases(lang)
+    if long_sentence is None:
+        long_sentence = LONG_SENTENCE.get(lang, LONG_SENTENCE_DEFAULT)
+    # Match at a word start so "stands as" does not fire inside "understands as";
+    # no end boundary, so suffixed forms still match ("günümüzdeki", "leveraged").
+    # "~phrase" = legitimate connective: flagged only when overused in this text.
+    compiled = []
+    for ph in phrases:
+        overuse = ph.startswith("~")
+        p = ph[1:].strip() if overuse else ph
+        if p:
+            compiled.append((p, overuse, re.compile(r"(?<!\w)" + re.escape(p))))
+    overused = {}
     findings = []
 
     # Phrase hits with line numbers (on raw lines, skipping code blocks).
@@ -64,11 +82,20 @@ def lint_text(text, lang="en", phrases=None, long_sentence=45):
         if in_code:
             continue
         low = arftext.lower(line, lang)
-        for ph in phrases:
-            if ph in low:
+        for ph, overuse, rx in compiled:
+            n = len(rx.findall(low))
+            if not n:
+                continue
+            if overuse:
+                overused.setdefault(ph, []).extend([ln] * n)
+            else:
                 findings.append({"line": ln, "kind": "phrase", "detail": ph})
         if arftext.SOURCE_MARK in line:
             findings.append({"line": ln, "kind": "unsourced", "detail": "[[SOURCE?]]"})
+    for ph, lns in sorted(overused.items()):
+        if len(lns) >= OVERUSE_MIN:
+            findings.append({"line": lns[0], "kind": "overused",
+                             "detail": "%s ×%d (lines %s)" % (ph, len(lns), ", ".join(str(l) for l in sorted(set(lns))))})
 
     prose = arftext.strip_markdown(text)
     paras = arftext.paragraphs(prose)
