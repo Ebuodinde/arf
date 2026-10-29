@@ -28,7 +28,7 @@ git clone https://github.com/Ebuodinde/arf.git && cd arf
 
 Then in your agent: `/arf <topic>` (Antigravity, Claude Code) or `$arf <topic>` (Codex).
 
-Requirements: Python 3.9+ (stdlib only). Optional: `pandoc` for DOCX/PDF export (PDF also needs a LaTeX engine); network access for literature search and `--online` DOI checks (set `ARF_MAILTO=you@example.org` to identify yourself to Crossref).
+Requirements: Python 3.10+ (stdlib only). Optional: `pandoc` for DOCX/PDF export (PDF also needs a LaTeX engine); network access for literature search and `--online` DOI checks (set `ARF_MAILTO=you@example.org` to identify yourself to Crossref).
 
 ## Use
 
